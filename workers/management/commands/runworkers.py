@@ -21,6 +21,7 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         self.__SIGINT = False
         signal.signal(signal.SIGINT, self.__handler)
+        signal.signal(signal.SIGTERM, self.__handler)
         super().__init__(*args, **kwargs)
 
     def __handler(self, sig, frame):
