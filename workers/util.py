@@ -11,17 +11,11 @@ def autodiscover():
     Autodiscover `tasks.py` files in much the same way Django admin discovers `admin.py`
 
     """
-    import imp
     from django.conf import settings
 
     for app in settings.INSTALLED_APPS:
         try:
-            app_path = import_module(app).__path__
-        except (AttributeError, ImportError):
-            continue
-
-        try:
-            imp.find_module('tasks', app_path)
+            import_module('tasks', app)
         except ImportError:
             continue
         except Exception as e:
