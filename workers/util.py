@@ -16,6 +16,7 @@ def autodiscover():
     for app in settings.INSTALLED_APPS:
         try:
             import_module('tasks', app)
+            log.info(f'Sucessfully imported {app}.tasks.')
         except ImportError:
             continue
         except Exception as e:
