@@ -15,13 +15,11 @@ def autodiscover():
 
     for app in settings.INSTALLED_APPS:
         try:
-            import_module('tasks', app)
+            import_module(f'{app}.tasks')
             log.info(f'Sucessfully imported {app}.tasks.')
-        except ImportError:
+        except ImportError as e:
+            log.warning(f"Could not import from {app}.tasks: {e}")
             continue
         except Exception as e:
             log.error('failed to autodiscover {0}: does it have an __init__.py file?'.format(app))
             continue
-
-        log.debug('discovered {0}.tasks'.format(app))
-        import_module("%s.tasks" % app)
